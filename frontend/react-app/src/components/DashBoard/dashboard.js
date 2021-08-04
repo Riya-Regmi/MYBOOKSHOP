@@ -155,6 +155,11 @@ const DashBoard=(props)=>{
                     let EmailAfterUpdated;
                     let phoneNumberAfterUpdated;
                     let imageAfterUpdated;
+                    if(picEdit===true){
+                        updateDataOfUser.append('dp',editPicture);
+                        imageAfterUpdated=editPicture;
+
+                    }
                     if(editFirstName===null){updateDataOfUser.append('firstName',firstName);firstNameAfterUpdated=firstName};
                     if(editFirstName!==null){updateDataOfUser.append('firstName',editFirstName);firstNameAfterUpdated=editFirstName};
                     if(editLastName!==null){updateDataOfUser.append('lastName',editLastName);LastNameAfterUpdated=editLastName};
@@ -165,8 +170,9 @@ const DashBoard=(props)=>{
                     if(editPhoneNumber!==null){updateDataOfUser.append('phoneNumber',editPhoneNumber);phoneNumberAfterUpdated=editPhoneNumber}
                     if(editPassword===null){updateDataOfUser.append('password',password);updateDataOfUser.append('confirmPassword',password)}
                     if(editPassword!==null){updateDataOfUser.append('password',editPassword);updateDataOfUser.append('confirmPassword',editPassword)}
-                    if(picEdit===true){updateDataOfUser.append('dp',editPicture);imageAfterUpdated=editPicture}
-                    if(picEdit===false){updateDataOfUser.append('dp',picture);imageAfterUpdated=picture}
+                    //if(picEdit===true){}
+                    //if(picEdit===false){updateDataOfUser.append('dp',picture);imageAfterUpdated=picture}
+
 
                     
                     axios.put(`http://127.0.0.1:8000/account/rest-auth/updateUser/${idOfUser}`,updateDataOfUser ,{

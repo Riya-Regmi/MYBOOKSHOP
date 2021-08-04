@@ -1,15 +1,14 @@
 import './App.css';
 import Header from './components/Header/index';
 import Navbar from './components/Navbar/index';
-import AboutUs from './components/AboutUs/index';
-import AboutUS from './components/AboutUs/index';
-import Footer from './components/Footer/footer';
 import App1 from './App1';
 import Books from './components/Books/books';
+import TextBook from './components/TextBook/textBook';
+import Notes from './components/notes/note'
 import DashBoard from './components/DashBoard/dashboard';
+import Recommendation from './components/recommendation/recommendation';
 import {BrowserRouter as Router,Switch,Route} from 'react-router-dom'; 
-import idOfUser from './components/Header/index';
-import React, { Component,useState,useEffect } from 'react';
+import React, { useState } from 'react';
 
 
 function App() {
@@ -20,14 +19,24 @@ const[userIdOfLogin,setUserIDOFLogin]=useState();
       <Header  setUserIDOFLogin={setUserIDOFLogin}/>
       <Navbar/>
       <Switch>
-      <Route exact path="/"  component={App1}/>
-      <Route exact path="/dashboard">
-        <DashBoard />
-    </Route>
-    <Route exact path="/Books">
-      <Books data={userIdOfLogin}/>
+        <Route exact path="/"  component={App1}/>
+        <Route exact path="/dashboard">
+          <DashBoard />
+        </Route>
+        <Route exact path="/Books">
+          <Books data={userIdOfLogin}/>
+        </Route>
+        <Route exact path="/textBook">
+          <TextBook data={userIdOfLogin}/>
+        </Route>
+        <Route exact path="/Notes">
+          <Notes data={userIdOfLogin} />
 
-    </Route>
+        </Route>
+        <Route exact path="/Recommendation">
+          <Recommendation data={userIdOfLogin}/>
+
+        </Route>
     
       </Switch>
 

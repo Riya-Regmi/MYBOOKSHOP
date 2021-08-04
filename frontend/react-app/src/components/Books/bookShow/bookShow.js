@@ -3,7 +3,7 @@ import React, { Component,useState,useEffect } from 'react';
 import Books from '../books';
 import './bookShow.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faChevronCircleDown,faChevronCircleUp} from '@fortawesome/free-solid-svg-icons'
+import {faChessKing, faChevronCircleDown,faChevronCircleUp} from '@fortawesome/free-solid-svg-icons'
 
 const BookShow=(props)=>{
     const[books,setBooks ]=useState({book:[]})
@@ -30,17 +30,11 @@ const BookShow=(props)=>{
     const showElementToHide=(id)=>{
         let ids=id;
         document.getElementById('hideTheButton'+`${ids}`).style='display:none';
-
         document.getElementById(`${ids}`).style="display:block";
-       // document.getElementById('elementsToHide').style="display:block";
-       //document.getElementsByClassName("showMoreButton").style='display:none';
     }
     const hideElement=(id)=>{
         let ids=id;
-       // document.getElementById('elementsToHide').style="display:none";
-        //document.getElementById('showMoreButton').style='display:show';
-        document.getElementById(`${ids}`).style="display:none"
-
+        document.getElementById(`${ids}`).style="display:none";
         document.getElementById('hideTheButton'+`${ids}`).style='display:show';
 
     }
@@ -49,19 +43,30 @@ const BookShow=(props)=>{
         if(typeof(typeOfStatus)==="number"){
             let bookData=await axios.get(`http://127.0.0.1:8000/account/rest-auth/bookAdded/${typeOfStatus}`)
             let lengthOfData=bookData.data.length;
-            for(var k=0;k<bookData.data.length;k++){
-                let bookId=bookData.data[k].['id']
-                if(bookId==data){
-                alert("You have added this book in list");
-                 break;
-                 
-                }
-                if(k+1==lengthOfData){
-                    props.bookFunction(data);
-                    document.getElementById('insideBookCard'+`${data}`).style='display:none';
+            if(lengthOfData===0){
+                props.bookFunction(data,"all");
+                        document.getElementById('insideBookCard'+`${data}`).style='display:none';
 
-                }
             }
+            else{
+                for(var k=0;k<bookData.data.length;k++){
+                    let bookId=bookData.data[k].['id']
+                    if(bookId==data){
+                    alert("You have added this book in list");
+                     break;
+                     
+                    }
+                    if(k+1==lengthOfData){
+                        props.bookFunction(data,"all");
+                        document.getElementById('insideBookCard'+`${data}`).style='display:none';
+    
+    
+    
+                    }
+                }
+
+            }
+            
 
             
 
@@ -73,11 +78,34 @@ const BookShow=(props)=>{
 
 
     }
+    if(typeof(props.rejectedBook)==="number"){
+        document.getElementById('insideBookCard'+`${props.rejectedBook}`).style='display:show';
+      //  document.getElementById(`${props.rejectedBook}`).style="display:none";
+        document.getElementById('hideTheButton'+`${props.rejectedBook}`).style='display:show';
+
+
+    }
+    //if(props.categoryIdentifier.bookCategory!="all" && props.categoryIdentifier.bookCategory!=="" ){
+      //  let bookIDS=props.categoryIdentifier.ID;
+       // console.log(props.categoryIdentifier.bookCategory)
+       // console.log(typeof(props.categoryIdentifier.bookCategory))
+        //console.log(typeof(props.categoryIdentifier.ID))
+       // console.log(props.categoryIdentifier.ID)
+       // document.getElementById('insideBookCard'+`${props.categoryIdentifier.ID}`).style='display:none';
+
+
+        
+
+
+   // }
     const showBooks=()=>{
         return books.book.map(books=>{
             return(
                 <div id={"insideBookCard"+books.id} style={{display:"show"}}>
-                    <div id="bookCard" key={books.id}>
+
+                    <div id="bookCard"  key={books.id}  >
+
+
                         <p className="bookTitle">{books.nameOfBook}</p>
                         <div>
                             <img src={books.bookImage}/>
@@ -85,7 +113,7 @@ const BookShow=(props)=>{
                         <div className="bookContents" key={books.id}>
                             <p><span>Writer:</span>{books.nameOfWriter}</p>
                             <p><span>Date Of Publication:</span>{books.dateOfPublication}</p>
-                            <p><span>Price:</span>{books.labelPriceBook}</p>
+                            <p><span>Price: Rs.</span>{books.labelPriceBook}</p>
                           <div id={"hideTheButton"+books.id} style={{display:"block"}}>
                           <button  key={books.id}  className="showMoreButton" onClick={(e)=>{showElementToHide(books.id)}} ><FontAwesomeIcon icon={faChevronCircleDown} style={{color:"rgb(218, 195, 46)"}}/></button>
                           </div>
@@ -101,6 +129,7 @@ const BookShow=(props)=>{
                     </div>)})}
                 return(
                     <div>
+                        
                         <div className="showBook">
                         <div className="aboutBook">
             

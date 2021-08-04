@@ -28,6 +28,21 @@ urlpatterns = [
     re_path(r'^rest-auth/listOfAllAddedBook/$',views.listOfAllAddedBook),
     re_path(r'^rest-auth/listOfSelectedBook/(?P<book>\w+)/$',views.listOfSelectedBook),
     re_path(r'^rest-auth/getBook/(?P<bookID>\w+)/$',views.getBook),
+    re_path(r'^rest-auth/listOfAllAddedTextBook/$',views.listOfAllAddedTextBook),
+    re_path(r'^rest-auth/listOfSelectedTextBook/(?P<book>\w+)/$',views.listOfSelectedTextBook),
+    re_path(r'^rest-auth/listOfAllAddedNotes/$',views.listOfAllAddedNotes),
+    re_path(r'^rest-auth/listOfAddedNotes/(?P<id>\w+)$',views.listOfAddedNotes),
+    re_path(r'^rest-auth/listOfAllSelectedNotes/(?P<book>\w+)/$',views.listOfAllSelectedNotes),
+    re_path(r'^rest-auth/getNote/(?P<bookID>\w+)/$',views.getNote),
+    re_path(r'^rest-auth/recommendationOfBook/$',views.recommendationOfBook),
+    re_path(r'^rest-auth/recommendationOfBookGET/$',views.recommendationOfBookGET),
+
+
+
+
+
+
+
 
 
 

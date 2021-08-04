@@ -20,7 +20,7 @@ const Comics=(props)=>{
                         setisThereBooks(true);
                     }}
                     
-                    getData()
+                    getData();
             
         }, []) 
 
@@ -44,10 +44,59 @@ const Comics=(props)=>{
             document.getElementById('hideTheButton'+`${ids}`).style='display:show';
     
         }
+        async function changeStatusOfBook(data){
+            let typeOfStatus=props.loginStatus;
+            if(typeof(typeOfStatus)==="number"){
+                let bookData=await axios.get(`http://127.0.0.1:8000/account/rest-auth/bookAdded/${typeOfStatus}`)
+                let lengthOfData=bookData.data.length;
+                if(lengthOfData===0){
+                    props.bookFunction(data,"all");
+                            document.getElementById('insideBookCard'+`${data}`).style='display:none';
+    
+                }
+                else{
+                    for(var k=0;k<bookData.data.length;k++){
+                        let bookId=bookData.data[k].['id']
+                        if(bookId==data){
+                        alert("You have added this book in list");
+                         break;
+                         
+                        }
+                        if(k+1==lengthOfData){
+                            props.bookFunction(data,"all");
+                            document.getElementById('insideBookCard'+`${data}`).style='display:none';
+        
+        
+        
+                        }
+                    }
+    
+                }
+                
+    
+                
+    
+            }
+            else{
+                alert("Please Login to add")
+            }
+            
+    
+    
+        }
+        if(typeof(props.rejectedBook)==="number"){
+            document.getElementById('insideBookCard'+`${props.rejectedBook}`).style='display:show';
+          //  document.getElementById(`${props.rejectedBook}`).style="display:none";
+            document.getElementById('hideTheButton'+`${props.rejectedBook}`).style='display:show';
+    
+    
+        }
+       
         const showBooks=()=>{
             return books.book.map(books=>{
                 return(
-                    
+                    <div id={"insideBookCard"+books.id} style={{display:"show"}}>
+
                         <div id="bookCard" key={books.id}>
                             <p className="bookTitle">{books.nameOfBook}</p>
                             <div>
@@ -64,10 +113,11 @@ const Comics=(props)=>{
                                 <div className="elementsToHide" style={{display:"none"}} key={books.id} id={books.id}>
                                 <p><span>Type:</span>{books.typeOfBook}</p>
                                 <p><span>Condition:</span>{books.conditionBook}</p>
-                                <p><button id="buttonToPay">Add to cart</button></p>
+                                <p><button id="buttonToPay" onClick={()=>{changeStatusOfBook(books.id)}}>Add to cart</button></p>
                                 <p><button className="showLessButton" id={books.id} onClick={(e)=>{hideElement(books.id)}}><FontAwesomeIcon icon={faChevronCircleUp} style={{color:"rgb(218, 195, 46)"}}/></button></p>
                                 </div>
                             </div>
+                        </div>
                         </div>)})}
                     return(
                         <div>

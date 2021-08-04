@@ -232,7 +232,7 @@ h1{
 
   .modalLogin{
       width:60%;
-      height:auto;
+      max-height:100%;
       background-color:rgb(194, 160, 172);
       margin:auto auto;
       outline:none;

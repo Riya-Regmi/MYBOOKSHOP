@@ -23,8 +23,8 @@
 }
 
 #bookCard div img{
-    height:50%;
-    width:90%;
+    height:300px;
+    width:300px;
     border:1px solid gold;
 }
 .bookContents p{

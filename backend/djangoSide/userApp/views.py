@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework import status
-from .models import Account,UserTokens,bookInformation
+from .models import Account,UserTokens,bookInformation,recommendation
 from .serializer import *
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from rest_auth.registration.views import SocialLoginView
@@ -53,6 +53,7 @@ def userData(request,id):
 @api_view(['PUT'])
 def updateData(request,id):
     datas=Account.objects.get(id=id)
+    print(request.data)
     serializer=accountSerializer(datas,data=request.data)
     if serializer.is_valid():
         serializer.save()
@@ -60,6 +61,8 @@ def updateData(request,id):
     else:
         print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 
 @api_view(['POST'])
@@ -176,6 +179,59 @@ def getBook(request,bookID):
     bookInfo=bookInformation.objects.filter(id=bookID)
     serializers=bookInformationSerializer(bookInfo,context={'request':request},many=True)
     return Response(serializers.data)
+
+@api_view(['GET'])
+def listOfAllAddedTextBook(request):
+    addedBooks=bookInformation.objects.filter(status='addedOnList',book="TextBook")
+    serializers=bookInformationSerializer(addedBooks,context={'request':request},many=True)
+    return Response(serializers.data)
+
+@api_view(['GET'])
+def listOfSelectedTextBook(request,book):
+    addedBooks=bookInformation.objects.filter(status='addedOnList',book="TextBook",typeOfBook=book)
+    serializers=bookInformationSerializer(addedBooks,context={'request':request},many=True)
+    return Response(serializers.data)
+
+@api_view(['GET'])
+def listOfAllAddedNotes(request):
+    addedBooks=notesInformation.objects.filter(status='addedOnList')
+    serializers=notesInformationSerializer(addedBooks,context={'request':request},many=True)
+    return Response(serializers.data)
+
+@api_view(['GET'])
+def listOfAddedNotes(request,id):
+    user=Account.objects.get(id=id)
+    data=notesInformation.objects.filter(user=user,status='addedOnList')
+    serializers=notesInformationSerializer(data,context={'request':request},many=True)
+    return Response(serializers.data)
+
+@api_view(['GET'])
+def getNote(request,bookID):
+    bookInfo=notesInformation.objects.filter(id=bookID)
+    serializers=notesInformationSerializer(bookInfo,context={'request':request},many=True)
+    return Response(serializers.data)
+
+@api_view(['GET'])
+def listOfAllSelectedNotes(request,book):
+    addedBooks=notesInformation.objects.filter(status='addedOnList',notesType=book)
+    serializers=notesInformationSerializer(addedBooks,context={'request':request},many=True)
+    return Response(serializers.data)
+
+@api_view(['POST'])
+def recommendationOfBook(request):
+    serializers=recommendationSerializer(data=request.data)
+    if serializers.is_valid():
+        serializers.save()
+        return Response(status=status.HTTP_201_CREATED)    
+    return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def recommendationOfBookGET(request):
+    data=recommendation.objects.all()
+    serializers=recommendationSerializer(data,context={'request':request},many=True)
+    return Response(serializers.data)
+
+
 
 
 

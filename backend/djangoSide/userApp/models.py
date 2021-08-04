@@ -27,7 +27,7 @@ class bookInformation(models.Model):
     book=models.CharField("Book",max_length=200)
     typeOfBook=models.CharField("typeOfBook",max_length=2000)
     nameOfWriter=models.CharField("nameOfWriter",max_length=5000)
-    labelPriceBook=models.CharField("labelPriceBook",max_length=1000)
+    labelPriceBook=models.IntegerField("labelPriceBookk")
     bookImage=models.ImageField("bookImage",upload_to='media/images',blank=True,null=True)
     nameOfBook=models.CharField("nameOfBook",max_length=10000)
     dateOfPublication=models.DateField("dateOfPublication",null=True)
@@ -39,10 +39,19 @@ class notesInformation(models.Model):
     status=models.CharField(default='addedOnList',max_length=10000)
     notesType=models.CharField("notesType",max_length=10000)
     noteTitle=models.CharField("noteTitle",max_length=10000)
-    notePrice=models.CharField("notePrice",max_length=10000)
+    notePrice=models.IntegerField("notePrice")
     noteFaculty=models.CharField("noteFaculty",max_length=50000)
     noteExplanation=models.CharField("noteExplanation",max_length=10000)
     date=models.DateField(default=date.today)
+
+class recommendation(models.Model):
+    name=models.CharField("userName",max_length=2000,null=True)
+    bookName=models.CharField("bookName",max_length=2000,null=True)
+    nameOfWriterRecommendation=models.CharField("nameOfWriterRecommendation",max_length=5000,null=True)
+    review=models.TextField("review",max_length=10000,null=True)
+    dateOFRecommendation=models.DateField(default=date.today)
+
+    
 
 
     

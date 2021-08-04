@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cabin&family=Merriweather:ital@1&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Benne&display=swap');
 #Books{
     height: auto;
 }
@@ -112,11 +113,7 @@
     color:gray;
     font-size: 35px;
 }
-.buyBookModalMiddle{
-    background-color:whitesmoke;
-    
 
-}
 #BuyTable {
     margin:5% 10%;
     background-color: whitesmoke;
@@ -157,6 +154,46 @@
     padding:16px 20px;
     outline: none;
     border:none;
+}
+#cancelBuyBookButton:hover{
+    background-color: gray;
+}
+
+.buyBookModalBottom{
+    margin-top: 5%;
+}
+#totalPriceOfBook tr td{
+    border-top:none;
+    border-bottom:2px solid gray ;
+    border-left:none;
+    border-right:none;
+    border-collapse: separate;
+    padding:25px 50px;
+    font-size: 25px;
+    margin-left: 2%;
+    font-family: 'Benne', serif;
+    color:rgb(31, 30, 30);
+
+}
+#checkOut{
+    font-size: 20px;
+    padding:16px 18px;
+    background-color: white;
+    border:1px solid gray;
+}
+#checkOut:hover{
+    background-color: teal;
+}
+#rightPartBookTop{
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    color:rgb(219, 169, 43);
+    margin: 0 8.5%;
+    letter-spacing: 1px;
+    border-bottom: 2px solid gold;
+    padding:10px 12px;
+    cursor: pointer;
 }
 
 
