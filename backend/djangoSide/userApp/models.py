@@ -12,7 +12,7 @@ class Account(models.Model):
     phoneNumber=models.CharField("phoneNumber",max_length=1000)
     password=models.CharField("password",max_length=2000)
     confirmPassword=models.CharField("repassword",max_length=2000)
-    dp=models.ImageField(upload_to='media/images',blank=True,default='media/images/pp.jpg',null=True)
+    dp=models.ImageField("dp",upload_to='media/images',blank=True,default='media/images/pp.jpg',null=True)
 
 class UserTokens(models.Model):
     accessToken=models.CharField("Access Token",max_length=20000)
@@ -28,11 +28,24 @@ class bookInformation(models.Model):
     typeOfBook=models.CharField("typeOfBook",max_length=2000)
     nameOfWriter=models.CharField("nameOfWriter",max_length=5000)
     labelPriceBook=models.CharField("labelPriceBook",max_length=1000)
-    bookImage=models.ImageField(upload_to='media/images',blank=True,null=True)
+    bookImage=models.ImageField("bookImage",upload_to='media/images',blank=True,null=True)
     nameOfBook=models.CharField("nameOfBook",max_length=10000)
     dateOfPublication=models.DateField("dateOfPublication",null=True)
     conditionBook=models.CharField("conditionBook",max_length=20000)
     date=models.DateField(default=date.today)
+
+class notesInformation(models.Model):
+    user=models.ForeignKey(Account,related_name='notesInformation',on_delete=models.CASCADE,null=True)
+    status=models.CharField(default='addedOnList',max_length=10000)
+    notesType=models.CharField("notesType",max_length=10000)
+    noteTitle=models.CharField("noteTitle",max_length=10000)
+    notePrice=models.CharField("notePrice",max_length=10000)
+    noteFaculty=models.CharField("noteFaculty",max_length=50000)
+    noteExplanation=models.CharField("noteExplanation",max_length=10000)
+    date=models.DateField(default=date.today)
+
+
+    
 
 
 

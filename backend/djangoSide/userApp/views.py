@@ -9,6 +9,7 @@ from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from rest_auth.registration.views import SocialLoginView
 import json
 from rest_framework.views import APIView
+from pathlib import Path
 
 @api_view(['GET', 'POST'])
 def create_and_show_acount(request):
@@ -63,17 +64,128 @@ def updateData(request,id):
 
 @api_view(['POST'])
 def bookInformationSave(request,id):
-    user=Account.objects.get(id=id)
-    serializer=bookInformationSerializer(user,data=request.data)
-    account=accountSerializer(user,data=serializer)
+    user=Account.objects.get(id=id)        
+    serializer=bookInformationSerializer(data=request.data)
     if serializer.is_valid():
-        serializer.save()
+        serializer.save(user=user)
+        return Response(status=status.HTTP_201_CREATED)
+    else:
+        print(serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def listOfAddedBook(request,id):
+    user=Account.objects.get(id=id)
+    data=bookInformation.objects.filter(user=user,status='addedOnList',book="Book")
+    serializers=bookInformationSerializer(data,context={'request':request},many=True)
+    return Response(serializers.data)
+
+@api_view(['GET'])
+def listOfAddedTextBook(request,id):
+    user=Account.objects.get(id=id)
+    data=bookInformation.objects.filter(user=user,status='addedOnList',book="TextBook")
+    serializers=bookInformationSerializer(data,context={'request':request},many=True)
+    return Response(serializers.data)
+
+@api_view(['POST'])
+def notesInformationSave(request,id):
+    user=Account.objects.get(id=id)
+    serializer=notesInformationSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save(user=user)
         return Response(status=status.HTTP_201_CREATED)
     else:
         print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['GET'])
+def listOfAddedNotes(request,id):
+    user=Account.objects.get(id=id)
+    data=notesInformation.objects.filter(user=user,status='addedOnList')
+    serializers=notesInformationSerializer(data,context={'request':request},many=True)
+    return Response(serializers.data)
+
+@api_view(['GET'])
+def specificBookInfo(request,id,bookId):
+    user=Account.objects.get(id=id)
+    bookData=bookInformation.objects.get(user=user,id=bookId)
+    serializers=bookInformationSerializer(bookData,context={'request':request})
+
+    return Response(serializers.data)
+
+@api_view(['PUT'])
+def editDataOfBook(request,id,bookId):
+    user=Account.objects.get(id=id)
+    bookInfo=bookInformation.objects.get(user=user,id=bookId)
+    serializers=bookInformationSerializer(bookInfo,data=request.data)
+    if serializers.is_valid():
+        serializers.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    else:
+        print(serializers.errors)
+        return Response(serializers.errors)
+
+@api_view(['DELETE'])
+def deleteDataOfBook(request,id,bookId):
+    user=Account.objects.get(id=id)
+    bookInfo=bookInformation.objects.get(user=user,id=bookId)
+    bookInfo.delete()  
+    return Response(status=status.HTTP_204_NO_CONTENT)  
+
+@api_view(['GET'])
+def specificNoteInfo(request,id,noteId):
+    user=Account.objects.get(id=id)
+    noteData=notesInformation.objects.get(user=user,id=noteId)
+    serializers=notesInformationSerializer(noteData,context={'request':request})
+    return Response(serializers.data)
+
+@api_view(['PUT'])
+def editDataOfNote(request,id,noteId):
+    user=Account.objects.get(id=id)
+    noteInfo=notesInformation.objects.get(user=user,id=noteId)
+    serializers=notesInformationSerializer(noteInfo,data=request.data)
+    if serializers.is_valid():
+        serializers.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    else:
+        print(serializers.errors)
+        return Response(serializers.errors)
+
+@api_view(['DELETE'])
+def deleteDataOfNote(request,id,noteId):
+    user=Account.objects.get(id=id)
+    noteData=notesInformation.objects.get(user=user,id=noteId)
+    noteData.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET'])
+def listOfAllAddedBook(request):
+    addedBooks=bookInformation.objects.filter(status='addedOnList',book="Book")
+    serializers=bookInformationSerializer(addedBooks,context={'request':request},many=True)
+    return Response(serializers.data)
+
+@api_view(['GET'])
+def listOfSelectedBook(request,book):
+    addedBooks=bookInformation.objects.filter(status='addedOnList',book="Book",typeOfBook=book)
+    serializers=bookInformationSerializer(addedBooks,context={'request':request},many=True)
+    return Response(serializers.data)
+
+@api_view(['GET'])
+def getBook(request,bookID):
+    bookInfo=bookInformation.objects.filter(id=bookID)
+    serializers=bookInformationSerializer(bookInfo,context={'request':request},many=True)
+    return Response(serializers.data)
+
+
+
+
+
+
+
+
+
+        
     
 
     

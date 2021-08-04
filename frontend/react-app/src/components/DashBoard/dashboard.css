@@ -2,6 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Inline+Display:wght@500&family=Source+Sans+Pro:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Akaya+Telivigala&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=New+Tegomin&display=swap');
 .personalData{
     display:flex;
       justify-content:space-between;
@@ -147,7 +149,7 @@
 }
 #addedOnList{
     background-color: rgb(252, 221, 194);
-    border:1px solid yellow;
+    border:1px solid rgb(192, 192, 16);
 }
 #boughtBooks:hover{
     background-color: rgb(226, 93, 93);
@@ -175,6 +177,19 @@
 
     width:70%;
 }
+#editAndUpdate input[type=button]{
+    background-color:#e6e5e5;
+    color:rgb(223, 133, 223);
+    font-weight: 400;
+    font-size: 18px;
+    text-align: center;
+    margin:20px 0;
+    margin-left: 15%;
+
+    width:70%;
+}
+
+
 #editAndUpdate li{
     margin:10px 10px;
 }
@@ -351,10 +366,65 @@
 
 }
 #showTheActivityInfo{
-    margin:5% auto;
-    width:70%;
-    background-color: rgb(187, 149, 161) ;
-    border:2px solid rgb(212, 133, 159)
+    margin:5% 10%;
+    width:auto;
+    background-color: rgb(252, 221, 194) ;
+    border:2px solid yellowgreen;
+}
+#addedOnListHeading{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+#addedOnListHeading div p{
+    margin-left: 10px;
+    font-size:25px;
+     font-family: 'New Tegomin', serif;;
+    font-weight: 600;
+    color:yellowgreen;
+    letter-spacing: 1px;
+}
+#addedOnListBook table, th, td {
+    border: 2px solid rgb(228, 144, 173) ;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 15px;
+  }
+#tableheading th{
+    background-color: rgb(235, 182, 201);
+}
+.bookEditModal{
+    margin:0 auto;
+    width:50%;
+    height:auto;
+    margin-top: 2%;
+    background-color: rgb(221, 158, 179);
+    border:2px solid rgb(177, 101, 177);
+
+}
+#ModalHead{
+    display: flex;
+    justify-content: space-between;
+    font-size: 25px;
+    color:purple;
+    font-weight: 700;
+
+}
+#dataOfEditBook{
+    display: flex;
+}
+#editImageBook{
+    width: 50%;
+}
+.textBookEditModal,.noteEditModal{
+    height:auto;
+    width:60%;
+    margin:auto;
+    margin-top:2%;
+    background:rgb(221, 158, 179) ;
+    overflow: auto;
+    border:1px solid palevioletred;
 }
 
 

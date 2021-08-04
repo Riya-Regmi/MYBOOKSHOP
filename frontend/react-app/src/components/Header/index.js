@@ -9,7 +9,8 @@ import {API_URL} from '../../constant/index';
 import GoogleLogin from 'react-google-login';
 //import pp from '../../assests/pp.jpg';
 import DashBoard from '../DashBoard/dashboard';
-import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom'; ;
+import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom'; 
+import Books from '../Books/books';
 
 
 
@@ -170,7 +171,7 @@ const Header=(props)=>{
                     let savedPassword=checkInfo.data[k].['password'];
                     setPicture(checkInfo.data[k].['dp']);
                     setIdOfUser(checkInfo.data[k].['id']);
-                    console.log(savedEmail);
+                    let ids=checkInfo.data[k].['id']
 
                     
 
@@ -181,6 +182,9 @@ const Header=(props)=>{
                             document.getElementById('icon').style='display:none';
                             document.getElementById('loginIcon').style='display:block';
                             setIsLogged(true);
+                            props.setUserIDOFLogin(ids);
+
+
                             break;
                         }
                         else{
@@ -194,6 +198,15 @@ const Header=(props)=>{
                 }
             } 
 
+            const logoutCalled=()=>{
+                document.getElementById('loginIcon').style='display:none';
+                document.getElementById('icon').style='display:block';
+                setIsLogged(false);
+                window.location.reload(false);
+
+            }
+
+            
             
             
 
@@ -212,26 +225,34 @@ const Header=(props)=>{
                         <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                         <div className="dropdown">
                             <div className="dropbtn click" >
-                            <FontAwesomeIcon id="icon" icon={faUser}   style={{color:"plum",fontSize:"25px",margin:"0 30px",cursor:'pointer',display:"block"}} />
+                            <div id="icon" style={{display:"block"}}>
+                            <FontAwesomeIcon  icon={faUser}   style={{color:"plum",fontSize:"25px",margin:"0 30px",cursor:'pointer'}} />
                             <div className="dropdown-content" style={isLogged?{display:"none"}:{display:"default"}} >
                             <li ><button onClick={onOpenModalSignup} className="Signup">SignUp</button></li>
                             <li ><button onClick={openLoginPage}    className="login">Login</button></li>
                             </div>
+                            </div>
+
                             </div>                            
                             
                         <div id="loginIcon" style={{display:"none"}}>
-
+                            
                                <img src={picture}  onClick={()=>setDropDown(!dropdown)} style={{height:"35px",width:"35px",borderRadius:"15px",borderColor:"3px solid plum",margin:"0 30px",cursor:'pointer'}}/>
                                {
                                    dropdown?
                                    <div className="loginDropdown"   >
                                        <li >
                                            <div>
-                                           <Link to={{pathname:'/dashboard',id:idOfUser,isLogged:true }} onClick={()=>setDropDown(false)} ><FontAwesomeIcon icon={faBars} style={{margin:"0 5px"}}/>DashBoard</Link>
+                                           <Link to={{pathname:'/dashboard',id:idOfUser,isLogged:true }} onClick={()=>{setDropDown(false)}} ><FontAwesomeIcon icon={faBars} style={{margin:"0 5px"}}/>DashBoard</Link>
                                            </div>
                                            
                                            </li>
-                                        <li><FontAwesomeIcon icon={faSignOutAlt} style={{margin:"0 5px"}} />Logout</li>
+                                        <li>
+                                            <div id="logoutButton">
+                                                <Link to={{pathname:'/'}} onClick={()=>{setDropDown(false);logoutCalled()}}><FontAwesomeIcon icon={faSignOutAlt} style={{margin:"0 5px"}} />Logout</Link>
+                                            </div>
+                                            
+                                            </li>
                                       
                                            
                                </div>:null

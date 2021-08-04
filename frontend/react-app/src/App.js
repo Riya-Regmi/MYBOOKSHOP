@@ -9,20 +9,26 @@ import Books from './components/Books/books';
 import DashBoard from './components/DashBoard/dashboard';
 import {BrowserRouter as Router,Switch,Route} from 'react-router-dom'; 
 import idOfUser from './components/Header/index';
+import React, { Component,useState,useEffect } from 'react';
 
 
 function App() {
+const[userIdOfLogin,setUserIDOFLogin]=useState();
   return (
     <Router>
     <div className="Home">
-      <Header/>
+      <Header  setUserIDOFLogin={setUserIDOFLogin}/>
       <Navbar/>
       <Switch>
       <Route exact path="/"  component={App1}/>
-      <Route  exact path="/Books" component={Books}/>
       <Route exact path="/dashboard">
-        <DashBoard/>
+        <DashBoard />
     </Route>
+    <Route exact path="/Books">
+      <Books data={userIdOfLogin}/>
+
+    </Route>
+    
       </Switch>
 
 
